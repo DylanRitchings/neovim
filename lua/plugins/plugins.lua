@@ -1,3 +1,15 @@
+local function path_from_repo_root()
+  local git_root = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
+  local file_path = vim.fn.expand('%:p')
+  if git_root ~= '' then
+    local repo_name = vim.fn.fnamemodify(git_root, ':t')  -- get repo folder name
+    local relative_path = file_path:sub(#git_root + 2)    -- path relative to repo root
+    return repo_name .. '/' .. relative_path
+  else
+    return file_path  -- fallback
+  end
+end
+
 return {
   "folke/lazy.nvim",
   {
@@ -223,9 +235,20 @@ return {
     },
     -- Optional dependencies
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    config = function(_, opts)
+      require("oil").setup(opts)
 
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-  },
+      -- Always open Oil in the current file's directory
+      vim.keymap.set("n", "<leader>o", function()
+        local dir = vim.fn.expand("%:p:h")
+        if dir == "" then
+          dir = vim.loop.cwd() -- fallback to CWD if no file
+        end
+        require("oil").open_float(dir)
+      end, { desc = "Open Oil in current file's directory" })
+    end,
+      -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
@@ -277,7 +300,27 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'auto',
+          section_separators = '',
+          component_separators = '',
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {
+            {'filename', path = 1, show_filename_only = false}  -- 0=filename, 1=relative path, 2=absolute path
+          },
+          lualine_x = {'encoding', 'fileformat', 'filetype'},
+          lualine_y = {'progress'},
+          lualine_z = {'location'},
+        },
+      }
+    end,
+    },
 
   {
     "airblade/vim-gitgutter",

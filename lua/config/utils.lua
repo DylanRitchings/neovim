@@ -186,5 +186,74 @@ for _, commit in ipairs(commits) do
 end
 
 
+-- local ts_utils = require("nvim-treesitter.ts_utils")
+-- -- Get the current node at cursor
+-- local function get_node_at_cursor()
+--     local node = ts_utils.get_node_at_cursor()
+--     if not node then return end
+--     return node
+-- end
+--
+-- -- Select inner part of the current node
+-- function U.select_down()
+--     local node = get_node_at_cursor()
+--     if not node then return end
+--     local children = { node:iter_children() }
+--     local inner = nil
+--     for child in node:iter_children() do
+--         if child:range() then
+--             inner = child
+--             break
+--         end
+--     end
+--     if not inner then return end
+--
+--     local s_row, s_col, e_row, e_col = inner:range()
+--     vim.api.nvim_win_set_cursor(0, { s_row + 1, s_col })
+--     vim.cmd('normal! v')
+--     vim.api.nvim_win_set_cursor(0, { e_row + 1, e_col })
+-- end
+--
+-- -- Move to next sibling node of the same type
+-- function U.select_next()
+--     local node = get_node_at_cursor()
+--     if not node then return end
+--     local parent = node:parent()
+--     if not parent then return end
+--
+--     local found = false
+--     for child in parent:iter_children() do
+--         if found then
+--             -- select next sibling
+--             local s_row, s_col, e_row, e_col = child:range()
+--             vim.api.nvim_win_set_cursor(0, { s_row + 1, s_col })
+--             vim.cmd('normal! v')
+--             vim.api.nvim_win_set_cursor(0, { e_row + 1, e_col })
+--             return
+--         end
+--         if child == node then
+--             found = true
+--         end
+--     end
+-- end
+-- -- Move to previous sibling node of the same type
+-- function U.select_prev()
+--     local node = get_node_at_cursor()
+--     if not node then return end
+--     local parent = node:parent()
+--     if not parent then return end
+--
+--     local last = nil
+--     for child in parent:iter_children() do
+--         if child == node and last then
+--             local s_row, s_col, e_row, e_col = last:range()
+--             vim.api.nvim_win_set_cursor(0, { s_row + 1, s_col })
+--             vim.cmd('normal! v')
+--             vim.api.nvim_win_set_cursor(0, { e_row + 1, e_col })
+--             return
+--         end
+--         last = child
+--     end
+-- end
 return U
 

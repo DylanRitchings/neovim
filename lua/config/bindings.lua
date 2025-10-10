@@ -107,8 +107,22 @@ wk.add({
 
   -- OIL
   -- { "<leader>d",  group = "Dired" },
-  { "<leader>dd", "<cmd>Oil<cr>",                                                                    desc = "Oil file manager" },
-  { "<leader>dp", "<cmd>Oil .<cr>",                                                                  desc = "Oil in project root" },
+  {
+    "<leader>dd",
+    function()
+      local dir = vim.fn.expand("%:p:h") -- directory of current file
+      if dir == "" then dir = vim.loop.cwd() end -- fallback if no file
+      require("oil").open(dir)
+    end,
+    desc = "Oil file manager (current file's directory)"
+  },
+  {
+    "<leader>dp",
+    function()
+      require("oil").open(vim.loop.cwd()) -- project root
+    end,
+    desc = "Oil in project root"
+  },
   { "<leader>dh", "<cmd>Oil ~<cr>",                                                                  desc = "Oil in home directory" },
   { "<leader>dD", "<cmd>Oil ~/dev<cr>",                                                              desc = "Oil in dev directory" },
   { "<leader>dr", "<cmd>Oil ~/dev/work_repos<cr>",                                                   desc = "Oil in work repos" },
@@ -164,7 +178,23 @@ wk.add({
   { "<leader>nf", "<cmd>ObsidianFollowLink<CR>",                                                     desc = "Follow link" },
   { "<leader>nb", "<cmd>ObsidianBacklinks<CR>",                                                      desc = "Backlinks" },
   { "<leader>nl", "<cmd>ObsidianLink<CR>",                                                           desc = "Link" },
-  mode = { "n", "v" },
+
+  { "<leader>x",  group = "testing" },
+  { "<leader>xe",  group = "behave" },
+  -- mode = { "n", "v" },
+  -- {
+  --   mode = {"v"},
+  --   { "gd", function() utils.select_down() end, desc = "Select inner node" },
+  -- },
+  -- {
+  --   mode = {"v"},
+  --   { "gn", function() utils.select_next() end, desc = "Next sibling node" },
+  -- },
+  -- {
+  --   mode = {"v"},
+  --   { "gp", function() utils.select_prev() end, desc = "Previous sibling node" },
+  -- }
+  
 })
 
 -- Use <C-j> and <C-k> to navigate coc.nvim's completion menu
@@ -193,3 +223,19 @@ end, { desc = "Open Git History (file/folder)" })
 
 map("n", "<leader>gn", ":cnext<CR>", { desc = "Next Git commit" })
 map("n", "<leader>gp", ":cprev<CR>", { desc = "Previous Git commit" })
+
+function _G.wild_up_down(dir)
+  local key
+  if dir == "up" then
+    key = vim.fn.wildmenumode() == 1 and "<C-p>" or "<Up>"
+  else
+    key = vim.fn.wildmenumode() == 1 and "<C-n>" or "<Down>"
+  end
+  return vim.api.nvim_replace_termcodes(key, true, true, true)
+end
+
+-- Mappings
+vim.api.nvim_set_keymap('c', '<Up>', 'v:lua.wild_up_down("up")', {expr=true, noremap=true})
+vim.api.nvim_set_keymap('c', '<Down>', 'v:lua.wild_up_down("down")', {expr=true, noremap=true})
+
+
