@@ -1,0 +1,41 @@
+{
+  "suggest.noselect": false,
+  "suggest.enablePreselect": true,
+  "suggest.minTriggerInputLength": 1,
+  "suggest.triggerAfterInsertEnter": true,
+  "python.pythonPath": "/usr/bin/python3",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "languageserver": {
+    "python": {
+      "command": "pyright-langserver",
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "python"
+      ],
+      "trace.server": "verbose",
+      "settings": {}
+    },
+    "github-actions": {
+      "command": "node",
+      "args": [
+        "gh-actions-language-server",
+        "--stdio"
+      ],
+      "filetypes": [
+        "yaml",
+        "yml"
+      ],
+      "rootPatterns": [
+        ".git",
+        ".github/workflows"
+      ],
+      "settings": {}
+    }
+  },
+  "coc.preferences.formatOnSave": true
+}
