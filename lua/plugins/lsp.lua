@@ -3,10 +3,10 @@ return {
     "neoclide/coc.nvim",
     branch = "release",
     config = function()
-  -- Recommended coc.nvim keybindings
-  vim.keymap.set("n", "[g", '<Plug>(coc-diagnostic-prev)', { desc = "Go to previous diagnostic" })
-  vim.keymap.set("n", "]g", '<Plug>(coc-diagnostic-next)', { desc = "Go to next diagnostic" })
-  -- Only set coc.nvim keybindings for diagnostics, keep LSP for navigation/actions
+      -- Recommended coc.nvim keybindings
+      vim.keymap.set("n", "[g", '<Plug>(coc-diagnostic-prev)', { desc = "Go to previous diagnostic" })
+      vim.keymap.set("n", "]g", '<Plug>(coc-diagnostic-next)', { desc = "Go to next diagnostic" })
+      -- Only set coc.nvim keybindings for diagnostics, keep LSP for navigation/actions
       -- Unified coc.nvim keybindings and settings
       vim.keymap.set("n", "gD", ':call CocActionAsync("jumpDeclaration")<CR>', { desc = "Go to declaration" })
       vim.keymap.set("n", "gd", '<Plug>(coc-definition)', { desc = "Go to definition" })
@@ -35,14 +35,15 @@ return {
       --   end,
       -- })
       -- Basic config: show documentation on hover
-    --   vim.cmd [[
-    --     autocmd CursorHold * silent call CocActionAsync('doHover')
-    --     autocmd User CocNvimInit ++once :CocInstall -sync coc-pyright coc-json coc-tsserver coc-lua coc-bash coc-yaml coc-html coc-css coc-markdown coc-powershell coc-docker coc-terraform coc-sql coc-vim | q
-    --   ]]
+      --   vim.cmd [[
+      --     autocmd CursorHold * silent call CocActionAsync('doHover')
+      --     autocmd User CocNvimInit ++once :CocInstall -sync coc-pyright coc-json coc-tsserver coc-lua coc-bash coc-yaml coc-html coc-css coc-markdown coc-powershell coc-docker coc-terraform coc-sql coc-vim | q
+      --   ]]
     end,
   },
   "folke/neodev.nvim",
-    -- "hrsh7th/cmp-nvim-lsp",
+  "jonatan-branting/nvim-better-n",
+  -- "hrsh7th/cmp-nvim-lsp",
   {
     "williamboman/mason-lspconfig.nvim",
     version = "v1.32.0"
@@ -52,12 +53,14 @@ return {
     "NoahTheDuke/vim-just",
     ft = "just",
   },
+  "Chaitanyabsprip/present.nvim",
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     dependencies = {
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
+        "tpope/vim-repeat",
       },
     },
     config = function()
@@ -75,58 +78,58 @@ return {
         sync_install = true,
         ignore_install = {},
         -- indent = { enable = true },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",   -- start selection
-      node_incremental = "grn", -- increment to next node
-      scope_incremental = "grc", -- increment to scope
-      node_decremental = "grm", -- decrement node
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- automatically jump forward to textobj
-      keymaps = {
-        ["af"] = "@function.outer", -- around function
-        ["if"] = "@function.inner", -- inside function
-        ["ac"] = "@class.outer",    -- around class
-        ["ic"] = "@class.inner",    -- inside class
-        ["ap"] = "@parameter.outer", -- around parameter
-        ["ip"] = "@parameter.inner", -- inside parameter
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- set jumps in jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["<leader>a"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["<leader>A"] = "@parameter.inner",
-      },
-    },
-  },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "gnn", -- start selection
+            node_incremental = "grn", -- increment to next node
+            scope_incremental = "grc", -- increment to scope
+            node_decremental = "grm", -- decrement node
+          },
+        },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,        -- automatically jump forward to textobj
+            keymaps = {
+              ["af"] = "@function.outer", -- around function
+              ["if"] = "@function.inner", -- inside function
+              ["ac"] = "@class.outer", -- around class
+              ["ic"] = "@class.inner", -- inside class
+              ["ap"] = "@parameter.outer", -- around parameter
+              ["ip"] = "@parameter.inner", -- inside parameter
+            },
+          },
+          move = {
+            enable = true,
+            set_jumps = true, -- set jumps in jumplist
+            goto_next_start = {
+              ["]m"] = "@function.outer",
+              ["]]"] = "@class.outer",
+            },
+            goto_next_end = {
+              ["]M"] = "@function.outer",
+              ["]["] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[m"] = "@function.outer",
+              ["[["] = "@class.outer",
+            },
+            goto_previous_end = {
+              ["[M"] = "@function.outer",
+              ["[]"] = "@class.outer",
+            },
+          },
+          swap = {
+            enable = true,
+            swap_next = {
+              ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["<leader>A"] = "@parameter.inner",
+            },
+          },
+        },
       })
     end
   },

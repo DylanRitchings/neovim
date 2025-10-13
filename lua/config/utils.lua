@@ -31,15 +31,15 @@ function U.open_browser(link)
 end
 
 local function in_visual_mode()
-    local mode = vim.api.nvim_get_mode().mode
-    return mode == 'v' or mode == 'V' or mode == '\22' -- '\22' represents Ctrl-V (Visual Block mode)
+  local mode = vim.api.nvim_get_mode().mode
+  return mode == 'v' or mode == 'V' or mode == '\22' -- '\22' represents Ctrl-V (Visual Block mode)
 end
 
 function U.open_github()
   local file_path = vim.fn.expand("%")
   local branch_name = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
   local repo_url = vim.fn.system("git remote get-url origin"):gsub("\n", "") -- TODO remove git
-  
+
   local repo_path = vim.fn.system("git rev-parse --show-toplevel"):gsub("\n", "")
   repo_path = repo_path:gsub("%.git$", "")
   -- TODO windows conversion
@@ -47,7 +47,7 @@ function U.open_github()
 
   local line_num = ""
   if in_visual_mode() then
-    local start_pos = vim.api.nvim_win_get_cursor(0)[1] 
+    local start_pos = vim.api.nvim_win_get_cursor(0)[1]
     local end_pos = vim.fn.getpos('v')[2]
     line_num = "#L" .. start_pos .. "-L" .. end_pos
   end
@@ -57,7 +57,6 @@ function U.open_github()
 
   vim.fn.setreg('+', github_link)
 end
-
 
 function U.open_cdk_docs()
   local word = vim.fn.expand("<cword>")
@@ -151,38 +150,38 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     local venv = string.format("%s/.venv", ROOT_DIR)
     if venv ~= "" then
-  -- require("venv-selector").retrieve_from_cache()
+      -- require("venv-selector").retrieve_from_cache()
     end
   end,
   once = true,
 })
 
--- TODO  
+-- TODO
 -- Get list of commits for file
 -- Open file in the latest commit
--- Cycle back and forth between commits 
+-- Cycle back and forth between commits
 -- Create the same for oil
 local function get_file_commits()
-    -- Get the full path of the current file
-    local file_path = vim.fn.expand('%:p')
+  -- Get the full path of the current file
+  local file_path = vim.fn.expand('%:p')
 
-    -- Run git log for the file and get output as a table
-    local commits = vim.fn.systemlist('git log --oneline -- ' .. vim.fn.shellescape(file_path))
+  -- Run git log for the file and get output as a table
+  local commits = vim.fn.systemlist('git log --oneline -- ' .. vim.fn.shellescape(file_path))
 
-    -- Check for errors
-    if vim.v.shell_error ~= 0 then
-        print("Error: Not a git repository or file not tracked")
-        return {}
-    end
+  -- Check for errors
+  if vim.v.shell_error ~= 0 then
+    print("Error: Not a git repository or file not tracked")
+    return {}
+  end
 
-    -- Return the commits table
-    return commits
+  -- Return the commits table
+  return commits
 end
 
 -- Example usage: print the commits
 local commits = get_file_commits()
 for _, commit in ipairs(commits) do
-    print(commit)
+  print(commit)
 end
 
 
@@ -255,5 +254,5 @@ end
 --         last = child
 --     end
 -- end
-return U
+
 

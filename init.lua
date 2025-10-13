@@ -18,5 +18,6 @@ require("lualine").setup()
 
 require("config.bindings")
 
+require("config.ts_utils")
 -- require("config.utils")
 

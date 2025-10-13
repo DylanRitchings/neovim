@@ -48,13 +48,37 @@ return {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
       "linux-cultist/venv-selector.nvim",
+      "jbyuki/one-small-step-for-vimkind",
     },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
       require("dap-python").setup(PYTHON_PATH)
       dapui.setup()
+      dap.adapters.nlua = function(callback, config)
+        callback({
+          type = "server",
+          host = config.host or "127.0.0.1",
+          port = config.port or 8086,
+        })
+      end
 
+      -- Lua configuration
+      dap.configurations.lua = {
+        {
+          type = "nlua",
+          request = "attach",
+          name = "Attach to running Neovim instance",
+          host = function()
+            return "127.0.0.1"
+          end,
+          port = function()
+            local val = tonumber(vim.fn.input("Port: ", "8086"))
+            assert(val, "Please provide a valid port number")
+            return val
+          end,
+        },
+      }
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end

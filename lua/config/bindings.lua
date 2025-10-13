@@ -22,6 +22,7 @@ map('n', '<C-s>', function()
 end, { noremap = true, silent = true, desc = "Run window-split bash script" })
 
 local utils = require("config.utils")
+local ts_utils = require("config.ts_utils")
 local wk = require("which-key")
 local ts = require("telescope.builtin")
 --local test = require("neotest")
@@ -168,17 +169,17 @@ wk.add({
   { "<leader>wL", "<C-w>L",                                                                          desc = "Move window to far right" },
   { "<leader>wd", "<C-w>c",                                                                          desc = "Close window" },
   { "<leader>ww", "<C-w>w",                                                                          desc = "Go to next window" },
-  { "<leader>n",  group = "Obsidian" },
-  { "<leader>nn", "<cmd>ObsidianNew<CR>",                                                            desc = "New note" },
-  { "<leader>nq", "<cmd>ObsidianQuickSwitch<CR>",                                                    desc = "Quick switch" },
-  { "<leader>nd", "<cmd>ObsidianToday<CR>",                                                          desc = "Today" },
-  { "<leader>nt", "<cmd>ObsidianTomorrow<CR>",                                                       desc = "Tomorrow" },
-  { "<leader>ny", "<cmd>ObsidianYesterday<CR>",                                                      desc = "Yesterday" },
-  { "<leader>ns", "<cmd>ObsidianSearch<CR>",                                                         desc = "Search" },
-  { "<leader>nf", "<cmd>ObsidianFollowLink<CR>",                                                     desc = "Follow link" },
-  { "<leader>nb", "<cmd>ObsidianBacklinks<CR>",                                                      desc = "Backlinks" },
-  { "<leader>nl", "<cmd>ObsidianLink<CR>",                                                           desc = "Link" },
-
+  -- { "<leader>n",  group = "Obsidian" },
+  -- { "<leader>nn", "<cmd>ObsidianNew<CR>",                                                            desc = "New note" },
+  -- { "<leader>nq", "<cmd>ObsidianQuickSwitch<CR>",                                                    desc = "Quick switch" },
+  -- { "<leader>nd", "<cmd>ObsidianToday<CR>",                                                          desc = "Today" },
+  -- { "<leader>nt", "<cmd>ObsidianTomorrow<CR>",                                                       desc = "Tomorrow" },
+  -- { "<leader>ny", "<cmd>ObsidianYesterday<CR>",                                                      desc = "Yesterday" },
+  -- { "<leader>ns", "<cmd>ObsidianSearch<CR>",                                                         desc = "Search" },
+  -- { "<leader>nf", "<cmd>ObsidianFollowLink<CR>",                                                     desc = "Follow link" },
+  -- { "<leader>nb", "<cmd>ObsidianBacklinks<CR>",                                                      desc = "Backlinks" },
+  -- { "<leader>nl", "<cmd>ObsidianLink<CR>",                                                           desc = "Link" },
+  --
   { "<leader>x",  group = "testing" },
   { "<leader>xe",  group = "behave" },
   -- mode = { "n", "v" },
