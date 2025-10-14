@@ -75,10 +75,10 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     -- :vimgrep's quickfix window display format now includes start and end column (in vim and nvim) so adding 2nd format to match that
     vim.bo.errorformat = '%f|%l col %c| %m,%f|%l col %c-%k| %m'
     vim.keymap.set(
-    'n',
-    '<C-s>',
-    '<Cmd>cgetbuffer|set nomodified|echo "quickfix/location list updated"<CR>',
-    { buffer = true, desc = 'Update quickfix/location list with changes made in quickfix window' }
+      'n',
+      '<C-s>',
+      '<Cmd>cgetbuffer|set nomodified|echo "quickfix/location list updated"<CR>',
+      { buffer = true, desc = 'Update quickfix/location list with changes made in quickfix window' }
     )
   end,
 })
@@ -91,4 +91,4 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "terraform", "hcl" },
 })
 
-vim.o.termguicolors = true  -- Enable 24-bit RGB color
+vim.o.termguicolors = true -- Enable 24-bit RGB color

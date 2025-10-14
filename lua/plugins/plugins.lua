@@ -2,11 +2,11 @@ local function path_from_repo_root()
   local git_root = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
   local file_path = vim.fn.expand('%:p')
   if git_root ~= '' then
-    local repo_name = vim.fn.fnamemodify(git_root, ':t')  -- get repo folder name
-    local relative_path = file_path:sub(#git_root + 2)    -- path relative to repo root
+    local repo_name = vim.fn.fnamemodify(git_root, ':t') -- get repo folder name
+    local relative_path = file_path:sub(#git_root + 2)   -- path relative to repo root
     return repo_name .. '/' .. relative_path
   else
-    return file_path  -- fallback
+    return file_path -- fallback
   end
 end
 
@@ -149,24 +149,6 @@ return {
     event = "VeryLazy",
   },
 
-  {
-    "epwalsh/obsidian.nvim",
-    version = "*",
-    lazy = true,
-    ft = "markdown",
-
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    opts = {
-      workspaces = {
-        {
-          name = "notes",
-          path = "~/dev/notes",
-        },
-      },
-    },
-  },
   -- {
   --   "stevearc/conform.nvim",
   --   opts = {},
@@ -247,8 +229,8 @@ return {
         require("oil").open_float(dir)
       end, { desc = "Open Oil in current file's directory" })
     end,
-      -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-    },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
@@ -309,18 +291,18 @@ return {
           globalstatus = true,
         },
         sections = {
-          lualine_a = {'mode'},
-          lualine_b = {'branch'},
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch' },
           lualine_c = {
-            {'filename', path = 1, show_filename_only = false}  -- 0=filename, 1=relative path, 2=absolute path
+            { 'filename', path = 1, show_filename_only = false } -- 0=filename, 1=relative path, 2=absolute path
           },
-          lualine_x = {'encoding', 'fileformat', 'filetype'},
-          lualine_y = {'progress'},
-          lualine_z = {'location'},
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
         },
       }
     end,
-    },
+  },
 
   {
     "airblade/vim-gitgutter",
@@ -379,5 +361,31 @@ return {
     ---@module "quicker"
     ---@type quicker.SetupOptions
     opts = {},
+  },
+  {
+    'aaronik/treewalker.nvim',
+    lazy = false,
+    opts = {
+      highlight = true,
+      highlight_duration = 250,
+      highlight_group = 'CursorLine',
+      select = false,
+      notifications = true,
+      jumplist = true,
+
+    },
+
+    config = function()
+      -- movement
+      vim.keymap.set({ 'n', 'v' }, '<C-k>', '<cmd>Treewalker Up<cr>', { silent = true })
+      vim.keymap.set({ 'n', 'v' }, '<C-j>', '<cmd>Treewalker Down<cr>', { silent = true })
+      vim.keymap.set({ 'n', 'v' }, '<C-h>', '<cmd>Treewalker Left<cr>', { silent = true })
+      vim.keymap.set({ 'n', 'v' }, '<C-l>', '<cmd>Treewalker Right<cr>', { silent = true })
+      -- swapping
+      vim.keymap.set('n', '<C-S-k>', '<cmd>Treewalker SwapUp<cr>', { silent = true })
+      vim.keymap.set('n', '<C-S-j>', '<cmd>Treewalker SwapDown<cr>', { silent = true })
+      vim.keymap.set('n', '<C-S-h>', '<cmd>Treewalker SwapLeft<cr>', { silent = true })
+      vim.keymap.set('n', '<C-S-l>', '<cmd>Treewalker SwapRight<cr>', { silent = true })
+    end,
   }
 }

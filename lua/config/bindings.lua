@@ -10,10 +10,10 @@ map('v', '<', '<gv', { noremap = true, silent = true })
 
 -- Resizing keymaps using Control + . , - =
 -- Use Control + h/j/k/l to resize windows
-map("n", "<C-l>", "<C-w><", { desc = "Decrease width", silent = true })
-map("n", "<C-h>", "<C-w>>", { desc = "Increase width", silent = true })
-map("n", "<C-j>", "<C-w>-", { desc = "Decrease height", silent = true })
-map("n", "<C-k>", "<C-w>+", { desc = "Increase height", silent = true })
+-- map("n", "<C-l>", "<C-w><", { desc = "Decrease width", silent = true })
+-- map("n", "<C-h>", "<C-w>>", { desc = "Increase width", silent = true })
+-- map("n", "<C-j>", "<C-w>-", { desc = "Decrease height", silent = true })
+-- map("n", "<C-k>", "<C-w>+", { desc = "Increase height", silent = true })
 map("n", "<M-j>", ":cn<CR>", { desc = "Goto next quickfix", silent = true })
 map("n", "<M-k>", ":cp<CR>", { desc = "Goto previous quickfix", silent = true })
 
@@ -111,7 +111,7 @@ wk.add({
   {
     "<leader>dd",
     function()
-      local dir = vim.fn.expand("%:p:h") -- directory of current file
+      local dir = vim.fn.expand("%:p:h")         -- directory of current file
       if dir == "" then dir = vim.loop.cwd() end -- fallback if no file
       require("oil").open(dir)
     end,
@@ -181,7 +181,7 @@ wk.add({
   -- { "<leader>nl", "<cmd>ObsidianLink<CR>",                                                           desc = "Link" },
   --
   { "<leader>x",  group = "testing" },
-  { "<leader>xe",  group = "behave" },
+  { "<leader>xe", group = "behave" },
   -- mode = { "n", "v" },
   -- {
   --   mode = {"v"},
@@ -195,17 +195,17 @@ wk.add({
   --   mode = {"v"},
   --   { "gp", function() utils.select_prev() end, desc = "Previous sibling node" },
   -- }
-  
+
 })
 
 -- Use <C-j> and <C-k> to navigate coc.nvim's completion menu
-map("i", "<C-j>", function()
-  return vim.fn.pumvisible() == 1 and "<C-n>" or "<C-j>"
-end, { expr = true, silent = true })
-
-map("i", "<C-k>", function()
-  return vim.fn.pumvisible() == 1 and "<C-p>" or "<C-k>"
-end, { expr = true, silent = true })
+-- map("i", "<C-j>", function()
+--   return vim.fn.pumvisible() == 1 and "<C-n>" or "<C-j>"
+-- end, { expr = true, silent = true })
+--
+-- map("i", "<C-k>", function()
+--   return vim.fn.pumvisible() == 1 and "<C-p>" or "<C-k>"
+-- end, { expr = true, silent = true })
 
 
 map("n", "<leader>gH", function()
@@ -236,7 +236,5 @@ function _G.wild_up_down(dir)
 end
 
 -- Mappings
-vim.api.nvim_set_keymap('c', '<Up>', 'v:lua.wild_up_down("up")', {expr=true, noremap=true})
-vim.api.nvim_set_keymap('c', '<Down>', 'v:lua.wild_up_down("down")', {expr=true, noremap=true})
-
-
+vim.api.nvim_set_keymap('c', '<Up>', 'v:lua.wild_up_down("up")', { expr = true, noremap = true })
+vim.api.nvim_set_keymap('c', '<Down>', 'v:lua.wild_up_down("down")', { expr = true, noremap = true })

@@ -53,7 +53,11 @@ return {
     "NoahTheDuke/vim-just",
     ft = "just",
   },
-  "Chaitanyabsprip/present.nvim",
+  {
+    "Piotr1215/presenterm.nvim",
+    build = false, -- Disable rockspec/luarocks build
+    opts = {},     -- Uses all defaults, auto-detects picker
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -74,28 +78,32 @@ return {
           "python", "markdown", "markdown_inline", "bash", "powershell", "yaml", "org",
           "git_config", "git_rebase", "gitignore", "gitcommit", "gitattributes", "diff",
           "json", "make", "editorconfig", "hjson", "http" },
-        auto_install = false,
+        auto_install = true,
+        highlight = {
+          enable = true, -- false will disable the whole extension
+          additional_vim_regex_highlighting = false,
+        },
         sync_install = true,
         ignore_install = {},
         -- indent = { enable = true },
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "gnn", -- start selection
-            node_incremental = "grn", -- increment to next node
+            init_selection = "gnn",    -- start selection
+            node_incremental = "grn",  -- increment to next node
             scope_incremental = "grc", -- increment to scope
-            node_decremental = "grm", -- decrement node
+            node_decremental = "grm",  -- decrement node
           },
         },
         textobjects = {
           select = {
             enable = true,
-            lookahead = true,        -- automatically jump forward to textobj
+            lookahead = true,              -- automatically jump forward to textobj
             keymaps = {
-              ["af"] = "@function.outer", -- around function
-              ["if"] = "@function.inner", -- inside function
-              ["ac"] = "@class.outer", -- around class
-              ["ic"] = "@class.inner", -- inside class
+              ["af"] = "@function.outer",  -- around function
+              ["if"] = "@function.inner",  -- inside function
+              ["ac"] = "@class.outer",     -- around class
+              ["ic"] = "@class.inner",     -- inside class
               ["ap"] = "@parameter.outer", -- around parameter
               ["ip"] = "@parameter.inner", -- inside parameter
             },
