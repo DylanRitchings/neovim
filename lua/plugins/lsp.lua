@@ -41,132 +41,33 @@ return {
       --   ]]
     end,
   },
+  "yaegassy/coc-cucumber",
   "folke/neodev.nvim",
   "jonatan-branting/nvim-better-n",
-  -- "hrsh7th/cmp-nvim-lsp",
+  {
+    "hrsh7th/nvim-cmp",
+    optional = true,
+    event = "CmdlineEnter",
+    opts = function(_, opts)
+      local ok, cmp = pcall(require, "cmp")
+      if not ok then
+        return opts
+      end
+
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          { name = "cmdline" },
+        }),
+      })
+
+      return opts
+    end,
+  },
   {
     "williamboman/mason-lspconfig.nvim",
     version = "v1.32.0"
   },
-
-  {
-    "NoahTheDuke/vim-just",
-    ft = "just",
-  },
-  {
-    "Piotr1215/presenterm.nvim",
-    build = false, -- Disable rockspec/luarocks build
-    opts = {},     -- Uses all defaults, auto-detects picker
-  },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        "tpope/vim-repeat",
-      },
-    },
-    config = function()
-      local configs = require("nvim-treesitter.configs")
-      require("nvim-treesitter.install").prefer_git = false
-      require("nvim-treesitter.install").compilers = { vim.fn.getenv('CC'), "cc", "gcc", "clang", "cl", "zig" }
-      local data_dir = vim.fn.stdpath('data')
-      configs.setup({
-        ensure_installed = {
-          "vim", "vimdoc", "query", "heex", "javascript", "html", "css",
-          "python", "markdown", "markdown_inline", "bash", "powershell", "yaml", "org",
-          "git_config", "git_rebase", "gitignore", "gitcommit", "gitattributes", "diff",
-          "json", "make", "editorconfig", "hjson", "http" },
-        auto_install = true,
-        highlight = {
-          enable = true, -- false will disable the whole extension
-          additional_vim_regex_highlighting = false,
-        },
-        sync_install = true,
-        ignore_install = {},
-        -- indent = { enable = true },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "gnn",    -- start selection
-            node_incremental = "grn",  -- increment to next node
-            scope_incremental = "grc", -- increment to scope
-            node_decremental = "grm",  -- decrement node
-          },
-        },
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,              -- automatically jump forward to textobj
-            keymaps = {
-              ["af"] = "@function.outer",  -- around function
-              ["if"] = "@function.inner",  -- inside function
-              ["ac"] = "@class.outer",     -- around class
-              ["ic"] = "@class.inner",     -- inside class
-              ["ap"] = "@parameter.outer", -- around parameter
-              ["ip"] = "@parameter.inner", -- inside parameter
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true, -- set jumps in jumplist
-            goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = "@class.outer",
-            },
-            goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
-            },
-            goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
-            },
-            goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
-            },
-          },
-          swap = {
-            enable = true,
-            swap_next = {
-              ["<leader>a"] = "@parameter.inner",
-            },
-            swap_previous = {
-              ["<leader>A"] = "@parameter.inner",
-            },
-          },
-        },
-      })
-    end
-  },
-  {
-    "HiPhish/rainbow-delimiters.nvim",
-    config = function()
-      local rainbow_delimiters = require("rainbow-delimiters")
-
-      vim.g.rainbow_delimiters = {
-        strategy = {
-          [""] = rainbow_delimiters.strategy["global"],
-          vim = rainbow_delimiters.strategy["local"],
-        },
-        query = {
-          [""] = "rainbow-delimiters",
-          lua = "rainbow-blocks",
-        },
-        highlight = {
-          "RainbowDelimiterRed",
-          "RainbowDelimiterYellow",
-          "RainbowDelimiterBlue",
-          "RainbowDelimiterOrange",
-          "RainbowDelimiterGreen",
-          "RainbowDelimiterViolet",
-          "RainbowDelimiterCyan",
-        },
-      }
-    end,
-  },
 }
-
--- let g:markdown_fenced_languages = ['html', 'python', 'lua', 'vim', 'typescript', 'javascript']

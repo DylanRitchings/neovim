@@ -77,7 +77,24 @@ wk.add({
     desc = "Live grep in current dir",
   },
   { "<leader>fr", "<cmd>Telescope oldfiles<cr>",                               desc = "Recent files" },
-  { "<leader>fp", "<cmd>CopyRelPath<cr>",                                      desc = "Copy current file path" },
+  {
+    "<leader>fp",
+    function()
+      local rel_path = vim.fn.expand("%")
+      vim.fn.setreg("+", rel_path)
+      vim.notify("Copied path: " .. rel_path)
+    end,
+    desc = "Copy current file path"
+  },
+  {
+    "<leader>fP",
+    function()
+      local abs_path = vim.fn.expand("%:p")
+      vim.fn.setreg("+", abs_path)
+      vim.notify("Copied full path: " .. abs_path)
+    end,
+    desc = "Copy full path"
+  },
   -- { "<leader>fm",   ":Move ",                                                    desc = "Move/Rename current file" },
   { "<leader>fc", "<cmd>edit " .. vim.fn.stdpath("config") .. "/init.lua<cr>", desc = "Config" },
 
@@ -92,7 +109,13 @@ wk.add({
   { "<leader>`",  "<c-^>",                                                     desc = "Switch to last buffer" },
   { "<leader>b",  group = "Buffers" },
   { "<leader>bb", "<cmd>Telescope buffers<cr>",                                desc = "List buffers" },
-  { "<leader>bd", "<cmd>bdelete<cr>",                                          desc = "Close buffer" },
+  { "<leader>bd", function()
+    if vim.bo.filetype == "oil" then
+      require("oil").close()
+    else
+      vim.cmd("bdelete")
+    end
+  end, desc = "Close buffer" },
   { "<leader>bn", "<cmd>bnext<cr>",                                            desc = "Next buffer" },
   { "<leader>bp", "<cmd>bprevious<cr>",                                        desc = "Previous buffer" },
 
@@ -110,12 +133,8 @@ wk.add({
   -- { "<leader>d",  group = "Dired" },
   {
     "<leader>dd",
-    function()
-      local dir = vim.fn.expand("%:p:h")         -- directory of current file
-      if dir == "" then dir = vim.loop.cwd() end -- fallback if no file
-      require("oil").open(dir)
-    end,
-    desc = "Oil file manager (current file's directory)"
+    "<cmd>Oil %:p:h<cr>",
+    desc = "Oil"
   },
   {
     "<leader>dp",

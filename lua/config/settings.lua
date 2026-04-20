@@ -5,9 +5,34 @@ ROOT_DIR = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 
 -- Basic settings
 vim.o.timeout = true
-vim.o.timeoutlen = 0
+vim.o.timeoutlen = 400
 vim.opt.clipboard:append("unnamedplus")
 vim.g.neovide_input_macos_alt_is_meta = true
+vim.g.editorconfig = false
+
+-- Line ending handling: read both formats, default to DOS for new files
+vim.o.fileformats = "dos,unix"  -- Can read both CRLF and LF
+vim.o.fileformat = "dos"        -- New buffers default to CRLF
+vim.o.fixendofline = false      -- Don't add missing end-of-line on save
+vim.o.endofline = false         -- Don't add trailing newline at EOF
+
+-- -- Convert Unix line endings to DOS before save
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   group = vim.api.nvim_create_augroup("EnforceFileFormat", { clear = true }),
+--   pattern = "*",
+--   callback = function(ev)
+--     if vim.bo[ev.buf].buftype == "" then
+--       -- Get all lines in the buffer
+--       local lines = vim.api.nvim_buf_get_lines(ev.buf, 0, -1, false)
+--       -- Rewrite them back, which forces any format conversions
+--       vim.api.nvim_buf_set_lines(ev.buf, 0, -1, false, lines)
+--       -- Now set format and EOF flags
+--       vim.bo[ev.buf].fileformat = "dos"
+--       vim.bo[ev.buf].fixendofline = false
+--       vim.bo[ev.buf].endofline = false
+--     end
+--   end,
+-- })
 
 vim.opt.relativenumber = true
 vim.opt.number = true
@@ -42,12 +67,8 @@ vim.opt.showbreak = ">>"
 vim.opt.linebreak = true
 vim.o.linebreak = true
 
--- Only format on LSP attach, not globally
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    vim.lsp.buf.format({ timeout_ms = 10000 })
-  end,
-})
+
+
 -- if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
 -- end
 if is_windows then

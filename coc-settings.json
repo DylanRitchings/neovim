@@ -7,7 +7,12 @@
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.useLibraryCodeForTypes": true,
-  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnusedFunction": "warning",
+    "reportUnusedVariable": "warning",
+    "reportUnusedImport": "warning"
+  },
   "languageserver": {
     "python": {
       "command": "pyright-langserver",
@@ -21,8 +26,9 @@
       "settings": {}
     },
     "github-actions": {
-      "command": "node",
+      "command": "npx",
       "args": [
+        "-y",
         "gh-actions-language-server",
         "--stdio"
       ],
@@ -36,6 +42,14 @@
       ],
       "settings": {}
     }
+  },
+  "toml.formatter.indentString": "    ",
+  "toml.formatter.arrayAutoCollapse": false,
+  "toml.formatter.compactArrays": true,
+  "toml.formatter.compactInlineTables": true,
+  "toml.formatter.columnWidth": 120,
+  "[toml]": {
+    "coc.preferences.formatOnSave": false
   },
   "coc.preferences.formatOnSave": true
 }

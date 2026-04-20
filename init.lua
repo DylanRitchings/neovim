@@ -11,10 +11,11 @@ require("config.lazy")
 
 require("config.settings")
 
-require("lazy").setup("plugins")
-
-
-require("lualine").setup()
+require("lazy").setup("plugins", {
+	rocks = {
+		enabled = false,
+	},
+})
 
 require("config.bindings")
 
